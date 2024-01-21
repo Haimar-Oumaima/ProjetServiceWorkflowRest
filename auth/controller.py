@@ -12,7 +12,13 @@ def login_user(login: LoginSchema, db: Session):
     return user
 
 def create_user(db: Session, user: RegisterSchema):
-    db_user = User(email=user.email)
+    db_user = User(
+        email = user.email,
+        nom = user.nom,
+        prenom = user.prenom,
+        adresse = user.adresse,
+        num_tel = user.num_tel
+    )
     db_user.hash_password(user.password)
     db.add(db_user)
     db.commit()

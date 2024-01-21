@@ -5,5 +5,9 @@ class LoginSchema(BaseModel):
     password: str
 
 class RegisterSchema(BaseModel):
+    nom: str
+    prenom: str
+    adresse: str
+    num_tel: str
     email: str
     password: str

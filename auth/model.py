@@ -8,6 +8,10 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 class User(Base):
     __tablename__ = "users"
     id = Column(Integer, primary_key=True)
+    nom = Column(String(255))  # Ajout du champ nom
+    prenom = Column(String(255))  # Ajout du champ prenom
+    adresse = Column(String(255))  # Ajout du champ adresse
+    num_tel = Column(String(20))  # Ajout du champ numéro de téléphone
     email = Column(String(255), unique=True)
     hashed_password = Column(String(255))
 
