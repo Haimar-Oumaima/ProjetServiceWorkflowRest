@@ -1,10 +1,8 @@
-from openai import OpenAI
-
-
+import openai
 class ExtractIa:
 
     def __init__(self):
-        self.client = OpenAI(api_key="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")
+        self.client = openai.OpenAI(api_key="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")
 
     def prepare_text(self, text_to_prepare: str):
         print(text_to_prepare)

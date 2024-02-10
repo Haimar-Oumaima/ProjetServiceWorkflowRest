@@ -20,3 +20,11 @@ class User(Base):
 
     def hash_password(self, plain_password):
         self.hashed_password = pwd_context.hash(plain_password)
+
+class UserHistory(Base):
+    __tablename__ = "user_history"
+    id = Column(Integer, primary_key=True)
+    email = Column(String(255), unique=True)
+    debts = Column(Integer)  
+    late_payments = Column(Integer)  
+    bankruptcy = Column(Integer)  
