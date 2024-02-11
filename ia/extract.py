@@ -1,9 +1,13 @@
-import openai
+from openai import OpenAI
+
+# Cette classe encapsule la logique pour interagir avec le modèle gpt-3.5-turbo d'OpenAI afin d'effectuer trois tâches principales :
+# la préparation, l'analyse et l'extraction d'informations à partir de texte
 class ExtractIa:
 
     def __init__(self):
-        self.client = openai.OpenAI(api_key="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")
+        self.client = OpenAI(api_key="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")
 
+    # prepare_text: Elimination du bruit, la normalisation, traitement initial visant à rendre le texte plus conforme aux besoins de l'analyse
     def prepare_text(self, text_to_prepare: str):
         print(text_to_prepare)
         completion = self.client.chat.completions.create(
@@ -22,6 +26,7 @@ class ExtractIa:
         prepared_text = completion.choices[0].message.content
         return prepared_text
 
+    # Analyser le texte en utilisant des techniques de traitement automatique du langage naturel (NLP)
     def analyse_text(self, text_to_analyse: str):
         print(text_to_analyse)
         completion = self.client.chat.completions.create(
@@ -39,6 +44,7 @@ class ExtractIa:
         analysed_text = completion.choices[0].message.content
         return analysed_text
 
+    # Extraire des informations spécifiques conformément à un schéma défini (simulant un modèle de base de données)
     def extract_info(self, info_to_extract: str):
         print(info_to_extract)
         completion = self.client.chat.completions.create(

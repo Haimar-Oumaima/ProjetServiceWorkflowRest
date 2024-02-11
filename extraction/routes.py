@@ -1,15 +1,30 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from dependencies import get_db
+from dependencies import get_db, get_token_from_header, get_user_from_token
 from . import controller, schemas, model
 
+# Création d'un nouvel objet APIRouter pour gérer les routes liées à l'extraction de texte
 extract_routes = APIRouter()
 
+# extract_text
+    # Cette fonction est un endpoint qui réagit aux requêtes POST à l'adresse "/extract".
+    # Elle attend une payload conforme au modèle défini dans `schemas.TextSchema`.
+
+    # `db: Session = Depends(get_db)` utilise la fonction de dépendance `get_db` pour fournir
+    # une session de base de données SQLAlchemy à l'endpoint. Cela permet de faire des opérations
+    # sur la base de données dans le corps de la fonction.
+
+    # `token: str = Depends(get_token_from_header)` utilise la fonction de dépendance
+    # `get_token_from_header` pour extraire le token JWT de l'en-tête Authorization de la requête.
+    # Ce token est ensuite utilisé pour identifier et authentifier l'utilisateur.
+
 @extract_routes.post("/extract")
-def extract_text(text_schema: schemas.TextSchema, db: Session = Depends(get_db)):
+def extract_text(text_schema: schemas.TextSchema, db: Session = Depends(get_db), token: str = Depends(get_token_from_header)):
+    # Convertit le payload du token en ID utilisateur après avoir vérifié sa validité.
+    user_payload = int(get_user_from_token(token))
     try:
-        result = controller.extract_information(text_schema.text, db)
+        result = controller.extract_information(text_schema.text, db, user_payload)
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
