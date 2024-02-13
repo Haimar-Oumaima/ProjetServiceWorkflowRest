@@ -1,5 +1,5 @@
 from passlib.context import CryptContext
-from sqlalchemy import Column, Integer, String, create_engine
+from sqlalchemy import Column, Integer, String, create_engine, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -12,10 +12,11 @@ class ExtractedInfo(Base):
     nom_client = Column(String)
     description_propriete = Column(String)
     adresse_propriete = Column(String)
-    montant_pret = Column(String)  
-    duree_pret = Column(String) 
-    revenu_mensuel = Column(String) 
-    depenses_mensuelles = Column(String)
+    montant_pret = Column(String)  # Utilisez Integer pour les montants si ce sont des nombres
+    duree_pret = Column(String)  # Utilisez Integer pour la durée si c'est un nombre d'années
+    revenu_mensuel = Column(String)  # Assurez-vous que c'est le type approprié
+    depenses_mensuelles = Column(String)  # Assurez-vous que c'est le type approprié
+    user_id = Column(Integer)
 
 
 
