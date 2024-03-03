@@ -12,5 +12,5 @@ app.include_router(auth_routes, prefix="/login_register", tags=["Register & Logi
 
 app.include_router(extract_routes, prefix="/extraction", tags=["Extraction d'Informations (IE)"])
 
-#app.include_router(evaluation_router, prefix="/evaluation_propriete", tags=["Évaluation de la Propriété"])
+app.include_router(evaluation_router, prefix="/evaluation_propriete", tags=["Évaluation de la Propriété"])
 
