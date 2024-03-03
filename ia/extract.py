@@ -9,7 +9,6 @@ class ExtractIa:
 
     # prepare_text: Elimination du bruit, la normalisation, traitement initial visant à rendre le texte plus conforme aux besoins de l'analyse
     def prepare_text(self, text_to_prepare: str):
-        print(text_to_prepare)
         completion = self.client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
@@ -24,11 +23,11 @@ class ExtractIa:
             ]
         )
         prepared_text = completion.choices[0].message.content
+
         return prepared_text
 
     # Analyser le texte en utilisant des techniques de traitement automatique du langage naturel (NLP)
     def analyse_text(self, text_to_analyse: str):
-        print(text_to_analyse)
         completion = self.client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
@@ -46,7 +45,6 @@ class ExtractIa:
 
     # Extraire des informations spécifiques conformément à un schéma défini (simulant un modèle de base de données)
     def extract_info(self, info_to_extract: str):
-        print(info_to_extract)
         completion = self.client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[

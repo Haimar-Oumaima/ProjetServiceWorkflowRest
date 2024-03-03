@@ -20,11 +20,9 @@ extract_routes = APIRouter()
     # Ce token est ensuite utilisé pour identifier et authentifier l'utilisateur.
 
 @extract_routes.post("/extract")
-def extract_text(text_schema: schemas.TextSchema, db: Session = Depends(get_db), token: str = Depends(get_token_from_header)):
-    # Convertit le payload du token en ID utilisateur après avoir vérifié sa validité.
-    user_payload = int(get_user_from_token(token))
+def extract_text(text_schema: schemas.TextSchema, db: Session = Depends(get_db)):
     try:
-        result = controller.extract_information(text_schema.text, db, user_payload)
+        result = controller.extract_information(text=text_schema.text,db=db, request_id=text_schema.request_id)
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

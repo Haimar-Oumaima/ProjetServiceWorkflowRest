@@ -5,10 +5,11 @@ from .model import ExtractedInfo
 from sqlalchemy.orm import Session
 from ia.extract import ExtractIa
 
+
 nlp = spacy.load("en_core_web_sm")
 
-def extract_information(text: str, db: Session, user_id: int):
 
+def extract_information(text: str, db: Session, request_id: str):
     # Initialiser une instance de la classe ExtractIa pour traiter le texte
     ExtractData =  ExtractIa()
 
@@ -23,15 +24,10 @@ def extract_information(text: str, db: Session, user_id: int):
 
     # Convertir la chaîne JSON en un dictionnaire
     extracted_info = json.loads(extracted_info_str)
-
-    # Mettre à jour le dictionnaire avec l'ID de l'utilisateur, ajoutant cette information aux données extraites
-    extracted_info.update({
-        "user_id":user_id
-    })
+    # Mettre à jour le dictionnaire avec l'ID de la demand, ajoutant cette information aux données extraites
+    extracted_info.update({"request_id": request_id})
 
     # Afficher dans la console l'ID de l'utilisateur et les informations extraites pour dbg
-    print(f"hey  {user_id, extracted_info} ")
-
     # Créer une instance du modèle ExtractedInfo en déballant le dictionnaire des informations extraites
     info_instance = ExtractedInfo(**extracted_info)
 
