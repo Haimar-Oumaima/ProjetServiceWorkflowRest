@@ -7,6 +7,7 @@ from . import controller, schemas, model
 # Création d'un nouvel objet APIRouter pour gérer les routes liées à l'extraction de texte
 extract_routes = APIRouter()
 
+
 # extract_text
     # Cette fonction est un endpoint qui réagit aux requêtes POST à l'adresse "/extract".
     # Elle attend une payload conforme au modèle défini dans `schemas.TextSchema`.
