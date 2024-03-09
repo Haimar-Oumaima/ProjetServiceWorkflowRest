@@ -38,34 +38,45 @@ def login_user(login: LoginSchema, db: Session):
 
 def create_user(db: Session, user: RegisterSchema):
     db_user = User(
-        email = user.email,
-        nom = user.nom,
-        prenom = user.prenom,
-        adresse = user.adresse,
-        num_tel = user.num_tel
+        email=user.email,
+        nom=user.nom,
+        prenom=user.prenom,
+        adresse=user.adresse,
+        num_tel=user.num_tel
     )
     db_user.hash_password(user.password)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
-    
-    add_user_history_entry(db, user.email)
+
+    user_id = db_user.id 
+
+    add_user_history_entry(db, user_id)  # Add the history of the newly created user.
     
     return db_user
 
-def add_user_history_entry(db: Session, email: str):
-    from register_login.model import UserHistory
+def add_user_history_entry(db: Session, user_id: int):
+    from .model import UserHistory
 
     debts = random.randint(0, 5)
     late_payments = random.randint(0, 10)
     bankruptcy = random.choice([0, 1])
+    monthly_revenue = random.uniform(2000, 6000)
+    monthly_expenses = random.uniform(500, monthly_revenue - 100)
 
-    user_history_entry = UserHistory(email=email, debts=debts, late_payments=late_payments, bankruptcy=bankruptcy)
+    user_history_entry = UserHistory(
+        user_id=user_id,
+        debts=debts,
+        late_payments=late_payments,
+        bankruptcy=bankruptcy,
+        monthly_revenue=monthly_revenue,
+        monthly_expenses=monthly_expenses
+    )
 
     db.add(user_history_entry)
     db.commit()
     db.refresh(user_history_entry)
-
+    
 def get_user_id(db: Session, email: str):
     user = db.query(User).filter(User.email == email).first()
     if user:

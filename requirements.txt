@@ -9,10 +9,11 @@ click==8.1.7
 cloudpathlib==0.16.0
 confection==0.1.4
 cymem==2.0.8
+cryptography
 distro==1.9.0
 ecdsa==0.18.0
 exceptiongroup==1.2.0
-fastapi==0.110.0
+fastapi
 greenlet==3.0.3
 h11==0.14.0
 httpcore==1.0.4
@@ -42,7 +43,7 @@ spacy-legacy==3.0.12
 spacy-loggers==1.0.5
 SQLAlchemy==2.0.27
 srsly==2.4.8
-starlette==0.37.1
+starlette
 thinc==8.2.3
 tqdm==4.66.2
 typer==0.9.0
