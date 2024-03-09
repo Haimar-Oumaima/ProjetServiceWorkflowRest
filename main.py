@@ -13,6 +13,7 @@ from register_login.model import User
 from register_login.routes import auth_routes
 from extraction.routes import extract_routes
 from demandes.routes import requests_routes
+from scoring.routes import scoring_routes
 
 User.metadata.create_all(bind=database.engine)
 ExtractedInfo.metadata.create_all(bind=database.engine)
@@ -27,7 +28,13 @@ app.include_router(requests_routes, prefix="/requests", tags=["Extraction d'Info
 
 app.include_router(extract_routes, prefix="/extraction", tags=["Extraction d'Informations (IE)"])
 
+<<<<<<< HEAD
+app.include_router(scoring_routes, prefix="/scoring", tags=["Scoring & credit verification"])
+
+# app.include_router(evaluation_router, prefix="/evaluation_propriete", tags=["Évaluation de la Propriété"])
+=======
 app.include_router(evaluation_router, prefix="/evaluation_propriete", tags=["Évaluation de la Propriété"])
+>>>>>>> main
 
 
 def service_web_composite(mapper, connection, target):
