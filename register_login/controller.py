@@ -9,6 +9,8 @@ from register_login.schemas import LoginSchema, RegisterSchema
 from datetime import datetime, timedelta
 from jose import jwt
 
+
+
 # Configuration de JWT
 SECRET_KEY = "votre_clé_secrète_ici"
 ALGORITHM = "HS256"

@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
 class TextSchema(BaseModel):
-    text: str
+    description: str
     request_id: str
+
