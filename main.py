@@ -35,6 +35,7 @@ app.include_router(evaluation_router, prefix="/evaluation_propriete", tags=["Év
 
 def service_web_composite(mapper, connection, target):
     request_id = str(target.id)
+    user_id = int(target.user_id)
     text = target.text
     url_to_extract_data = "http://127.0.0.1:8000/extraction/extract"
     payload_to_extract_data = {"request_id": request_id, "text": text}
@@ -42,11 +43,7 @@ def service_web_composite(mapper, connection, target):
     response_extract_body = json.loads(response_extract.text)
     print('response_extract_body',response_extract_body, )
     if response_extract.status_code != 200:
-        # normalement error
         return
-
-
-    # continuer avec les autres services, appeler le scoring, le propriete et decision
     url_to_evaluate_property = "http://127.0.0.1:8000/evaluation_propriete/evaluate"
     payload_to_evaluate_property= {
         "request_id": request_id,
@@ -54,9 +51,17 @@ def service_web_composite(mapper, connection, target):
     }
     print(payload_to_evaluate_property)
     response_evaluate_property = requests.post(url_to_evaluate_property, json=payload_to_evaluate_property)
-    print(response_evaluate_property.status_code, response_evaluate_property.text)
-
-
-
+    if response_evaluate_property.status_code != 200:
+        return
+    response_evaluate_property_body = json.loads(response_evaluate_property.text)
+    market_value = response_evaluate_property_body["market_value"]
+    inspection_report = response_evaluate_property_body["inspection_report"]
+    legal_compliance = response_evaluate_property_body["legal_compliance"]
+    url_to_get_user_scoring = "http://127.0.0.1:8000/scoring/scoring"
+    payload_to_get_user_scoring = {
+        "user_id": user_id
+    }
+    response_user_scoring = requests.post(url_to_get_user_scoring, json=payload_to_get_user_scoring)
+    print(f"payload_to_get_user_scoring", response_user_scoring)
 
 event.listen(DemandesInfo, 'after_insert', service_web_composite)
