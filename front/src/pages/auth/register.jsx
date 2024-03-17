@@ -15,6 +15,24 @@ export default function Register() {
         for (let [key, value] of formData.entries()) {
             formValues[key] = value;
         }
+
+        // Check telephone format
+        if (!/^\d{10}$/.test(formValues.telephone)) {
+            alert("Please enter a valid 10-digit telephone number.");
+            return;
+        }
+
+        // Check email format
+        if (!/\S+@\S+\.\S+/.test(formValues.email)) {
+            alert("Please enter a valid email address.");
+            return;
+        }
+
+        // Check password length
+        if (formValues.password.length < 8) {
+            alert("Password must be at least 8 characters long.");
+            return;
+        }
         const payload = {
             nom: formValues.nom,
             prenom: formValues.prenom,
@@ -25,7 +43,7 @@ export default function Register() {
         }
         try {
             const result = await httpClient.post('login_register/register', payload)
-            alert('inscription reussi')
+            alert('Error during registration')
             router.push('/auth/login')
         } catch (e) {
             alert(`Error pendant l'inscription : ${e.detail}`)
