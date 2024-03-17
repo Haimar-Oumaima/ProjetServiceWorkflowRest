@@ -21,10 +21,12 @@ export default function Register() {
             email: formValues.email,
             password: formValues.password,
         }
-        console.log("payload", payload)
-        const result = await httpClient.post('login_register/register', payload)
+        try {
+            const result = await httpClient.post('login_register/register', payload)
+        } catch (e) {
+            alert(`Error pendant l'inscription : ${e}`)
+        }
         console.log(result);
-        // Vous pouvez envoyer les données à votre backend ou effectuer
     };
 
     return (

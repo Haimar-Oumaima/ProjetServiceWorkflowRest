@@ -7,7 +7,6 @@ export default function Login() {
     const router = useRouter()
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const formData = new FormData(e.target);
         const formValues = {};
 
@@ -22,12 +21,15 @@ export default function Login() {
         try {
             result = await httpClient.post('login_register/login', payload)
         } catch (e) {
-            console.error("cnx refused")
+            console.error("cnx refused",e.detail)
+            alert(`Error connexion ${e.detail}`)
+
         }
-        const {access_token} = result
+        const access_token = result?.access_token
         if (access_token) {
+            alert("Vous etes connecté")
             sessionStorage.setItem('token', access_token)
-            router.push('/request/submit')
+            router.push('/request')
         }
     };
 
