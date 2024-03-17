@@ -3,8 +3,10 @@ import json
 import requests
 from fastapi import FastAPI
 from sqlalchemy import event
+from starlette.middleware.cors import CORSMiddleware
 
 import database
+from decision.routes import decision_routes
 from demandes.model import DemandesInfo
 from evaluation.model import PropertyEvaluation
 from evaluation.routes import evaluation_router
