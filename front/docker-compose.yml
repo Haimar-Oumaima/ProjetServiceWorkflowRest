@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+    node:
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: dev
+        container_name: front
+        ports:
+            - '8080:8080'
+        volumes:
+            - ./:/app
+        environment:
+            - .env
