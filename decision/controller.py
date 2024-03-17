@@ -63,3 +63,8 @@ def convert_loan_duration(loan_duration):
         return float(random.randint(1, 25))
     else:
         return float(loan_duration)
+
+
+
+def get_decision(db, request_id:int):
+    return db.query(Decision).filter(Decision.request_id == request_id).first()

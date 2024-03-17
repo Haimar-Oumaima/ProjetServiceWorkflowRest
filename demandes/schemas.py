@@ -4,3 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 class RequestSchema(BaseModel):
     text: str
+
+class RequestUpdateSchema(BaseModel):
+    status: str
+
