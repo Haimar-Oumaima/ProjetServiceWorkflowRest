@@ -11,7 +11,7 @@ class DemandesInfo(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     text = Column(String(255))
     user_id = Column(Integer)
-    status = Column(Enum("pending", "approved", "rejected", name="request_status_enum"), default="pending")
+    status = Column(Enum("pending", "approved", "refused", name="request_status_enum"), default="pending")
 
 
 

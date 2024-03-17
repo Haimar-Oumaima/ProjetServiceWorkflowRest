@@ -4,8 +4,7 @@ from sqlalchemy.orm import Session
 from evaluation.model import PropertyEvaluation
 
 
-def evaluate_property_value(db: Session, description, request_id: str):
-    request_id = int(request_id)
+def evaluate_property_value(db: Session, description, request_id: int):
     # Analyse des données du marché immobilier
     market_value = analyze_real_estate_data(description)
     # Inspection virtuelle ou sur place

@@ -6,7 +6,7 @@ from dependencies import get_db
 
 decision_routes = APIRouter()
 
-@decision_routes.post("/decision")
+@decision_routes.post("/decide")
 def make_decision_route(scoring_response: ScoringResponse, property_evaluation_response: PropertyEvaluationResponse, db: Session = Depends(get_db)):
     decision = make_decision(db, scoring_response, property_evaluation_response)
     return decision
