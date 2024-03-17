@@ -14,7 +14,6 @@ from register_login.routes import auth_routes
 from extraction.routes import extract_routes
 from demandes.routes import requests_routes
 from scoring.routes import scoring_routes
-from fastapi.middleware.cors import CORSMiddleware
 
 User.metadata.create_all(bind=database.engine)
 ExtractedInfo.metadata.create_all(bind=database.engine)
@@ -51,6 +50,8 @@ app.include_router(scoring_routes, prefix="/scoring", tags=["Scoring & credit ve
 
 app.include_router(evaluation_router, prefix="/evaluation_propriete", tags=["Évaluation de la Propriété"])
 
+app.include_router(decision_routes, prefix="/decision", tags=["Request decision"])
+
 
 def service_web_composite(mapper, connection, target):
     request_id = str(target.id)
@@ -81,6 +82,6 @@ def service_web_composite(mapper, connection, target):
         "user_id": user_id
     }
     response_user_scoring = requests.post(url_to_get_user_scoring, json=payload_to_get_user_scoring)
-    print(f"payload_to_get_user_scoring", response_user_scoring.text,market_value,inspection_report, legal_compliance)
+    print(f"payload_to_get_user_scoring", response_user_scoring)
 
 event.listen(DemandesInfo, 'after_insert', service_web_composite)
