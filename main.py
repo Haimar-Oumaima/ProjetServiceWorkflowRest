@@ -14,6 +14,7 @@ from register_login.routes import auth_routes
 from extraction.routes import extract_routes
 from demandes.routes import requests_routes
 from scoring.routes import scoring_routes
+from fastapi.middleware.cors import CORSMiddleware
 
 User.metadata.create_all(bind=database.engine)
 ExtractedInfo.metadata.create_all(bind=database.engine)
@@ -21,6 +22,24 @@ DemandesInfo.metadata.create_all(bind=database.engine)
 PropertyEvaluation.metadata.create_all(bind=database.engine)
 
 app = FastAPI()
+
+
+origins = [
+    "http://localhost.tiangolo.com",
+    "https://localhost.tiangolo.com",
+    "http://localhost",
+    "http://localhost:8080",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 app.include_router(auth_routes, prefix="/login_register", tags=["Register & Login"])
 
@@ -62,6 +81,6 @@ def service_web_composite(mapper, connection, target):
         "user_id": user_id
     }
     response_user_scoring = requests.post(url_to_get_user_scoring, json=payload_to_get_user_scoring)
-    print(f"payload_to_get_user_scoring", response_user_scoring)
+    print(f"payload_to_get_user_scoring", response_user_scoring.text,market_value,inspection_report, legal_compliance)
 
 event.listen(DemandesInfo, 'after_insert', service_web_composite)
