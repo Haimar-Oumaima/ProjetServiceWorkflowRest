@@ -8,7 +8,7 @@ class Decision(Base):
 
     id = Column(Integer, primary_key=True)
     request_id = Column(Integer)
-    decision = Column(String)
-    message = Column(String)
+    decision = Column(String(255))
+    message = Column(String(255))
     interest_rate = Column(Integer)
     monthly_amount = Column(Integer)

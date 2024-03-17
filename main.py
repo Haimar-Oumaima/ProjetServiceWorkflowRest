@@ -6,6 +6,7 @@ from sqlalchemy import event
 from starlette.middleware.cors import CORSMiddleware
 
 import database
+from decision.model import Decision
 from decision.routes import decision_routes
 from demandes.model import DemandesInfo
 from evaluation.model import PropertyEvaluation
@@ -21,6 +22,7 @@ User.metadata.create_all(bind=database.engine)
 ExtractedInfo.metadata.create_all(bind=database.engine)
 DemandesInfo.metadata.create_all(bind=database.engine)
 PropertyEvaluation.metadata.create_all(bind=database.engine)
+Decision.metadata.create_all(bind=database.engine)
 
 app = FastAPI()
 
