@@ -14,7 +14,8 @@ from jose import jwt
 # Configuration de JWT
 SECRET_KEY = "votre_clé_secrète_ici"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 600  # La durée de vie du token
+ACCESS_TOKEN_EXPIRE_MINUTES = 60  # La durée de vie du token
+
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()

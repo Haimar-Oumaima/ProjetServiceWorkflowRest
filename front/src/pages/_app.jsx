@@ -18,7 +18,9 @@ export default function MyApp({Component, pageProps}) {
                 <Navbar.Collapse>
                     <Navbar.Link href="/auth/login">Login</Navbar.Link>
                     <Navbar.Link href="/auth/register">Register</Navbar.Link>
-                    <Navbar.Link href="/request">Demander un pret</Navbar.Link>
+                    <Navbar.Link href="/request">Mes demandes</Navbar.Link>
+                    <Navbar.Link href="/request/submit">Demander un pret</Navbar.Link>
+                    <Navbar.Link href="/auth/logout">Logout</Navbar.Link>
                 </Navbar.Collapse>
             </Navbar>
             <div className={"m-6"}>

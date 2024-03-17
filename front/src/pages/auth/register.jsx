@@ -2,8 +2,10 @@
 
 import {Button, Label, Textarea, TextInput} from "flowbite-react";
 import httpClient from "@/services/httpClient";
+import {useRouter} from "next/router";
 
 export default function Register() {
+    const router = useRouter()
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -23,10 +25,11 @@ export default function Register() {
         }
         try {
             const result = await httpClient.post('login_register/register', payload)
+            alert('inscription reussi')
+            router.push('/auth/login')
         } catch (e) {
-            alert(`Error pendant l'inscription : ${e}`)
+            alert(`Error pendant l'inscription : ${e.detail}`)
         }
-        console.log(result);
     };
 
     return (
