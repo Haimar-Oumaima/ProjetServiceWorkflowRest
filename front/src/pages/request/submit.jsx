@@ -24,20 +24,23 @@ export default function Submit() {
     };
     return (
         <>
-            <h2>Soumettre votre demande</h2>
-            <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit}>
-                <div>
-                    <div className="mb-2 block">
-                        <Label htmlFor="text" value="Contenu de la demande"/>
-                    </div>
-                    <Textarea id="text" name="text"
-                              placeholder="Soumettre votre demande en respectant les signes suivants, comment vous appelez, le montant du pret demandé, l'adresse du logement, la description de la propriété."
-                              required rows={6}/>
+            <div className="flex justify-center w-full">
+                <div className="w-1/3">
+                    <h2 className={"my-4"}>Soumettre votre demande</h2>
+                    <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit}>
+                        <div>
+                            <div className="mb-2 block">
+                                <Label htmlFor="text" value="Contenu de la demande"/>
+                            </div>
+                            <Textarea id="text" name="text"
+                                      placeholder="Soumettre votre demande en respectant les signes suivants, comment vous appelez, le montant du pret demandé, l'adresse du logement, la description de la propriété."
+                                      required rows={6}/>
+                        </div>
+
+                        <Button type="submit" isProcessing={isLoading}>Submit</Button>
+                    </form>
                 </div>
-
-                <Button type="submit" isProcessing={isLoading}>Submit</Button>
-            </form>
-
+            </div>
         </>
     )
 }

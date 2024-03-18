@@ -52,46 +52,51 @@ export default function Register() {
 
     return (
         <>
-            <h2>Register</h2>
-            <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit}>
-                <div>
-                    <div className="mb-2 block">
-                        <Label htmlFor="nom" value="Votre nom"/>
-                    </div>
-                    <TextInput id="nom" name="nom" type="text" placeholder="Votre nom" required/>
+            <div className="flex justify-center w-full">
+                <div className="w-1/3">
+                    <h2>Register</h2>
+                    <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit}>
+                        <div>
+                            <div className="mb-2 block">
+                                <Label htmlFor="nom" value="Votre nom"/>
+                            </div>
+                            <TextInput id="nom" name="nom" type="text" placeholder="Votre nom" required/>
+                        </div>
+                        <div>
+                            <div className="mb-2 block">
+                                <Label htmlFor="prenom" value="Votre prenom"/>
+                            </div>
+                            <TextInput id="prenom" name="prenom" type="text" placeholder="Votre prenom" required/>
+                        </div>
+                        <div>
+                            <div className="mb-2 block">
+                                <Label htmlFor="telephone" value="Votre telephone"/>
+                            </div>
+                            <TextInput id="telephone" name="telephone" type="text" placeholder="Votre telephone"
+                                       required/>
+                        </div>
+                        <div>
+                            <div className="mb-2 block">
+                                <Label htmlFor="adresse" value="Adresse postale"/>
+                            </div>
+                            <Textarea id="adresse" name="adresse" placeholder="Votre adresse postale" required/>
+                        </div>
+                        <div>
+                            <div className="mb-2 block">
+                                <Label htmlFor="email" value="Votre email"/>
+                            </div>
+                            <TextInput id="email" name="email" type="email" placeholder="name@gmail.com" required/>
+                        </div>
+                        <div>
+                            <div className="mb-2 block">
+                                <Label htmlFor="password" value="Your password"/>
+                            </div>
+                            <TextInput id="password" name="password" type="password" required/>
+                        </div>
+                        <Button type="submit">Submit</Button>
+                    </form>
                 </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label htmlFor="prenom" value="Votre prenom"/>
-                    </div>
-                    <TextInput id="prenom" name="prenom" type="text" placeholder="Votre prenom" required/>
-                </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label htmlFor="telephone" value="Votre telephone"/>
-                    </div>
-                    <TextInput id="telephone" name="telephone" type="text" placeholder="Votre telephone" required/>
-                </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label htmlFor="adresse" value="Adresse postale"/>
-                    </div>
-                    <Textarea id="adresse" name="adresse" placeholder="Votre adresse postale" required/>
-                </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label htmlFor="email" value="Votre email"/>
-                    </div>
-                    <TextInput id="email" name="email" type="email" placeholder="name@gmail.com" required/>
-                </div>
-                <div>
-                    <div className="mb-2 block">
-                        <Label htmlFor="password" value="Your password"/>
-                    </div>
-                    <TextInput id="password" name="password" type="password" required/>
-                </div>
-                <Button type="submit">Submit</Button>
-            </form>
+            </div>
         </>
     );
 }

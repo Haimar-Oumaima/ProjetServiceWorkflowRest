@@ -6,11 +6,11 @@ from sqlalchemy.sql import func
 
 Base = declarative_base()
 
+
 class DemandesInfo(Base):
     __tablename__ = "demandes"
     id = Column(Integer, primary_key=True, autoincrement=True)
     text = Column(String(255))
     user_id = Column(Integer)
     created_at = Column(DateTime, default=func.now(), nullable=False)
-    status = Column(Enum("pending", "approved", "refused", name="request_status_enum"), default="pending")
-
+    status = Column(Enum("pending", "approved", "refused", "traité", name="request_status_enum"), default="traité")

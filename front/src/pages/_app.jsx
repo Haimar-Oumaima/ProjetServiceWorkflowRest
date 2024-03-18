@@ -1,4 +1,3 @@
-// "use client"
 import '@/styles/globals.css';
 import Link from 'next/link';
 import {Navbar} from 'flowbite-react';
@@ -23,7 +22,7 @@ export default function MyApp({Component, pageProps}) {
                     <Navbar.Link href="/auth/logout">Logout</Navbar.Link>
                 </Navbar.Collapse>
             </Navbar>
-            <div className={"m-6"}>
+            <div className={"m-12"}>
                 <Component {...pageProps} />
             </div>
         </div>

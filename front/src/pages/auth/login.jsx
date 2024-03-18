@@ -21,7 +21,7 @@ export default function Login() {
         try {
             result = await httpClient.post('login_register/login', payload)
         } catch (e) {
-            console.error("cnx refused",e.detail)
+            console.error("cnx refused", e.detail)
             alert(`Error connexion ${e.detail}`)
 
         }
@@ -33,10 +33,11 @@ export default function Login() {
         }
     };
 
-    return (
-        <>
+return (
+    <div className="flex justify-center w-full">
+        <div className="w-1/3">
             <h2>Login</h2>
-            <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit}>
+            <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
                 <div>
                     <div className="mb-2 block">
                         <Label htmlFor="email" value="Votre email"/>
@@ -51,6 +52,8 @@ export default function Login() {
                 </div>
                 <Button type="submit">Submit</Button>
             </form>
-        </>
-    );
+        </div>
+    </div>
+);
+
 }
