@@ -123,7 +123,7 @@ def notify(user_id, status):
         if user:
             print("User found:", user.email)
             send_email(user.email, f"Votre demande de pret a été {status}",
-                       "Visiter notre page pour voir plus de detail")
+                       "Veuillez vous connecter sur l'application pour voir les détails.")
         else:
             print("User not found with ID:", user_id)
     finally:

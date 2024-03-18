@@ -43,7 +43,7 @@ export default function Register() {
         }
         try {
             const result = await httpClient.post('login_register/register', payload)
-            alert('Error during registration')
+            alert('Inscription réussie')
             router.push('/auth/login')
         } catch (e) {
             alert(`Error pendant l'inscription : ${e?.detail}`)
