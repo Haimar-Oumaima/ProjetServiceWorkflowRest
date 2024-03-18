@@ -122,8 +122,16 @@ def notify(user_id, status):
         user = session.query(User).filter(User.id == user_id).first()
         if user:
             print("User found:", user.email)
-            send_email(user.email, f"Votre demande de pret a été {status}",
-                       "Veuillez vous connecter sur l'application pour voir les détails.")
+            send_email(user.email, "Notification de demande de prêt", f"""
+            Cher utilisateur,
+
+            Nous tenons à vous informer que votre demande de prêt a été {status}.
+
+            Veuillez vous connecter à notre application pour obtenir plus de détails.
+
+            Cordialement,
+            L'équipe de gestion des prêts
+            """)
         else:
             print("User not found with ID:", user_id)
     finally:

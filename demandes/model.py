@@ -14,3 +14,4 @@ class DemandesInfo(Base):
     user_id = Column(Integer)
     created_at = Column(DateTime, default=func.now(), nullable=False)
     status = Column(Enum("pending", "approved", "refused", "traité", name="request_status_enum"), default="traité")
+

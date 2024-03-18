@@ -37,7 +37,16 @@ def update_request(db: Session, request_id: int, status: str):
     user_id = request_to_update.user_id
     user = db.query(User).filter(User.id == user_id).first()
     user_email = user.email
-    send_email(user_email, f"Votre demande de pret a été {status}", "Visiter notre page pour voir plus de detail")
+    send_email(user_email, "Notification de demande de prêt", f"""
+Cher utilisateur,
+
+Nous tenons à vous informer que votre demande de prêt a été {status}.
+
+Veuillez vous connecter à notre application pour obtenir plus de détails.
+
+Cordialement,
+L'équipe de gestion des prêts
+""")
 
     request_to_update.status = status
     db.commit()
