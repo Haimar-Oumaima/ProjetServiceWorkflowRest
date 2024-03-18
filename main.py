@@ -3,8 +3,8 @@ import json
 import requests
 from fastapi import FastAPI
 from sqlalchemy import event
+from sqlalchemy.orm import sessionmaker
 from starlette.middleware.cors import CORSMiddleware
-from sqlalchemy import update
 
 import database
 from decision.model import Decision
@@ -18,6 +18,7 @@ from register_login.routes import auth_routes
 from extraction.routes import extract_routes
 from demandes.routes import requests_routes
 from scoring.routes import scoring_routes
+from utils.email import send_email
 
 User.metadata.create_all(bind=database.engine)
 ExtractedInfo.metadata.create_all(bind=database.engine)
@@ -26,7 +27,6 @@ PropertyEvaluation.metadata.create_all(bind=database.engine)
 Decision.metadata.create_all(bind=database.engine)
 
 app = FastAPI()
-
 
 origins = [
     "http://localhost.tiangolo.com",
@@ -44,7 +44,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 app.include_router(auth_routes, prefix="/login_register", tags=["Register & Login"])
 
 app.include_router(requests_routes, prefix="/requests", tags=["Extraction d'Informations (IE)"])
@@ -57,12 +56,13 @@ app.include_router(evaluation_router, prefix="/evaluation_propriete", tags=["Év
 
 app.include_router(decision_routes, prefix="/decision", tags=["Request decision"])
 
+HOST_URL = "http://127.0.0.1:8000"
 
-
+Session = sessionmaker(bind=database.engine)
 def extract_data(target):
     request_id = str(target.id)
     text = target.text
-    url_to_extract_data = "http://127.0.0.1:8000/extraction/extract"
+    url_to_extract_data = f"{HOST_URL}/extraction/extract"
     payload_to_extract_data = {"request_id": request_id, "text": text}
     print("Commencer la récupération des données d'extraction...")
     response_extract = requests.post(url_to_extract_data, json=payload_to_extract_data)
@@ -75,10 +75,11 @@ def extract_data(target):
     print("Fin de la récupération des données d'extraction")
     return response_extract_body
 
+
 def evaluate_property(response_extract_body):
     request_id = response_extract_body.get("request_id")
     description = response_extract_body.get("description_propriete")
-    url_to_evaluate_property = "http://127.0.0.1:8000/evaluation_propriete/evaluate"
+    url_to_evaluate_property = f"{HOST_URL}/evaluation_propriete/evaluate"
     payload_to_evaluate_property = {"request_id": request_id, "description": description}
     print("Commencer l'évaluation de la propriété...")
     print("payload_to_evaluate_property", payload_to_evaluate_property)
@@ -91,8 +92,9 @@ def evaluate_property(response_extract_body):
     print("Fin de l'évaluation de la propriété")
     return response_evaluate_property_body
 
+
 def get_user_scoring(user_id):
-    url_to_get_user_scoring = "http://127.0.0.1:8000/scoring/scoring"
+    url_to_get_user_scoring = f"{HOST_URL}/scoring/scoring"
     payload_to_get_user_scoring = {"user_id": user_id}
     print("Commencer la récupération du scoring utilisateur...")
     response_user_scoring = requests.post(url_to_get_user_scoring, json=payload_to_get_user_scoring)
@@ -101,15 +103,31 @@ def get_user_scoring(user_id):
     print("Fin de la récupération du scoring utilisateur")
     return response_user_scoring_body
 
+
 def make_decision(scoring_response, property_evaluation_response):
-    url_to_make_decision = "http://127.0.0.1:8000/decision/decide"
-    payload_to_make_decision = {"scoring_response": scoring_response, "property_evaluation_response": property_evaluation_response}
+    url_to_make_decision = f"{HOST_URL}/decision/decide"
+    payload_to_make_decision = {"scoring_response": scoring_response,
+                                "property_evaluation_response": property_evaluation_response}
     print("Commencer à prendre une décision...")
     print("payload_to_make_decision", payload_to_make_decision)
     response_decision = requests.post(url_to_make_decision, json=payload_to_make_decision)
     print(f"response_decision", response_decision.text)
     print("Fin de la prise de décision")
     return response_decision
+
+
+def notify(user_id, status):
+    session = Session()
+    try:
+        user = session.query(User).filter(User.id == user_id).first()
+        if user:
+            print("User found:", user.email)
+            send_email(user.email, f"Votre demande de pret a été {status}",
+                       "Visiter notre page pour voir plus de detail")
+        else:
+            print("User not found with ID:", user_id)
+    finally:
+        session.close()
 
 
 def service_web_composite(mapper, connection, target):
@@ -128,6 +146,10 @@ def service_web_composite(mapper, connection, target):
     response_user_scoring_body = get_user_scoring(user_id)
 
     decision_response = make_decision(response_user_scoring_body, response_evaluate_property_body)
-    print("Décision prise:", decision_response.text)
+    response_decision_response = json.loads(decision_response.text)
+    print("Décision prise:", response_decision_response)
+    notify(user_id=user_id, status=response_decision_response["decision"])
+
+
 
 event.listen(DemandesInfo, 'after_insert', service_web_composite)
