@@ -64,13 +64,26 @@ export default function Request() {
                     <Modal.Header>Demande detail</Modal.Header>
                     <Modal.Body>
                         <div className="space-y-6">
-                            <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                {decisionDetail?.decision} <br/>
-                                {decisionDetail?.message} <br/>
-                                {decisionDetail?.monthly_amount} <br/>
-                                {decisionDetail?.interest_rate}
-                                {decisionDetail?.reason} <br/>
-                            </p>
+                            <div className="flex flex-col space-y-1">
+                                <span className="font-semibold">Décision:</span>
+                                <p className="text-base leading-relaxed text-gray-700 dark:text-gray-400">{decisionDetail?.decision}</p>
+                            </div>
+                            <div className="flex flex-col space-y-1">
+                                <span className="font-semibold">Message:</span>
+                                <p className="text-base leading-relaxed text-gray-700 dark:text-gray-400">{decisionDetail?.message}</p>
+                            </div>
+                            <div className="flex flex-col space-y-1">
+                                <span className="font-semibold">Montant mensuel:</span>
+                                <p className="text-base leading-relaxed text-gray-700 dark:text-gray-400">{decisionDetail?.monthly_amount}</p>
+                            </div>
+                            <div className="flex flex-col space-y-1">
+                                <span className="font-semibold">Taux d'intérêt:</span>
+                                <p className="text-base leading-relaxed text-gray-700 dark:text-gray-400">{decisionDetail?.interest_rate}</p>
+                            </div>
+                            <div className="flex flex-col space-y-1">
+                                <span className="font-semibold">Détails de la décision:</span>
+                                <p className="text-base leading-relaxed text-gray-700 dark:text-gray-400">{decisionDetail?.reason}</p>
+                            </div>
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
