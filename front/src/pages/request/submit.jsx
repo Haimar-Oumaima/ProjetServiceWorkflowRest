@@ -1,12 +1,17 @@
 "use client"
 import {Button, Label, Textarea, TextInput} from "flowbite-react";
 import httpClient from "@/services/httpClient";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 
 export default function Submit() {
+    const [isLogged, setIsLogged] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
+
+    useEffect(() => {
+        setIsLogged(sessionStorage.getItem('token')?.length > 0)
+    }, []);
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -22,6 +27,15 @@ export default function Submit() {
         alert('demande a bien été envoyé')
         router.push('/request')
     };
+    if (isLogged === false) {
+        return (
+            <>
+                <div>
+                    Connectez vous d'abord afin de soumettre votre demande
+                </div>
+            </>
+        )
+    }
     return (
         <>
             <div className="flex justify-center w-full">

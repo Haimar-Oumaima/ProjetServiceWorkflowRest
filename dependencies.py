@@ -3,7 +3,6 @@ from sqlalchemy.orm import Session
 
 from database import SessionLocal
 from fastapi import HTTPException, Depends, status, Security
-from jose import JWTError
 from datetime import datetime, timedelta
 import jwt
 from fastapi import FastAPI, Header, HTTPException

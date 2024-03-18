@@ -46,7 +46,7 @@ export default function Register() {
             alert('Error during registration')
             router.push('/auth/login')
         } catch (e) {
-            alert(`Error pendant l'inscription : ${e.detail}`)
+            alert(`Error pendant l'inscription : ${e?.detail}`)
         }
     };
 

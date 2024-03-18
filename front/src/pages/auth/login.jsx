@@ -21,8 +21,8 @@ export default function Login() {
         try {
             result = await httpClient.post('login_register/login', payload)
         } catch (e) {
-            console.error("cnx refused", e.detail)
-            alert(`Error connexion ${e.detail}`)
+            console.error("cnx refused", e?.detail)
+            alert(`Error connexion ${e?.detail}`)
 
         }
         const access_token = result?.access_token
